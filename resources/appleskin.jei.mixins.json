@@ -1,0 +1,8 @@
+{
+  "required": false,
+  "package": "squeek.appleskin.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "JEIRenderHelperMixin"
+  ]
+}
