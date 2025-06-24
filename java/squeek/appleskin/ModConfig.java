@@ -60,6 +60,30 @@ public class ModConfig implements ConfigData
 	@ConfigEntry.Gui.Tooltip()
 	@Comment("Alpha value of the flashing icons at their most visible point (1.0 = fully opaque, 0.0 = fully transparent)")
 	public float maxHudOverlayFlashAlpha = 0.65f;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("Custom red component for saturation overlay (0-255)")
+	public int saturationOverlayRed = 255;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("Custom green component for saturation overlay (0-255)")
+	public int saturationOverlayGreen = 255;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("Custom blue component for saturation overlay (0-255)")
+	public int saturationOverlayBlue = 255;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("Saturation overlay hue (0.0-1.0)")
+	public float saturationOverlayHue = 0.0f;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("Saturation overlay gamma/brightness (0.0-2.0)")
+	public float saturationOverlayGamma = 1.0f;
+
+	@ConfigEntry.Gui.Tooltip()
+	@Comment("If true, uses HSL (hue/gamma) mode instead of RGB mode for saturation overlay")
+	public boolean useSaturationHSLMode = false;
 }
 
 

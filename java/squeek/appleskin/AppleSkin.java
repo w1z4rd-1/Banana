@@ -1,10 +1,12 @@
 package squeek.appleskin;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import squeek.appleskin.api.AppleSkinApi;
+import squeek.appleskin.client.BannanaCommand;
 import squeek.appleskin.client.DebugInfoHandler;
 import squeek.appleskin.client.HUDOverlayHandler;
 import squeek.appleskin.client.TooltipOverlayHandler;
@@ -22,6 +24,12 @@ public class AppleSkin implements ClientModInitializer
 		HUDOverlayHandler.init();
 		TooltipOverlayHandler.init();
 		DebugInfoHandler.init();
+		
+		// Register the bannana command
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+			BannanaCommand.register(dispatcher);
+		});
+		
 		FabricLoader.getInstance().getEntrypointContainers("appleskin", AppleSkinApi.class).forEach(entrypoint -> {
 			try
 			{

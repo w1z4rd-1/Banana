@@ -9,6 +9,8 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
@@ -174,6 +176,9 @@ public class HUDOverlayHandler
 
 		enableAlpha(alpha);
 
+		// Apply custom saturation color
+		applySaturationColor();
+
 		float modifiedSaturation = Math.max(0, Math.min(saturationLevel + saturationGained, 20));
 
 		int startSaturationBar = 0;
@@ -211,6 +216,8 @@ public class HUDOverlayHandler
 			context.drawTexture(TextureHelper.MOD_ICONS, x, y, u, v, iconSize, iconSize);
 		}
 
+		// Reset color back to white
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, alpha);
 		disableAlpha(alpha);
 	}
 
@@ -349,6 +356,57 @@ public class HUDOverlayHandler
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		if (needDisableBlend)
 			RenderSystem.disableBlend();
+	}
+
+	private void applySaturationColor()
+	{
+		if (ModConfig.INSTANCE.useSaturationHSLMode)
+		{
+			// Convert HSL to RGB
+			float hue = ModConfig.INSTANCE.saturationOverlayHue;
+			float saturation = 1.0f;
+			float lightness = ModConfig.INSTANCE.saturationOverlayGamma * 0.5f;
+			
+			// Clamp values
+			hue = MathHelper.clamp(hue, 0.0f, 1.0f);
+			lightness = MathHelper.clamp(lightness, 0.0f, 1.0f);
+			
+			// Convert HSL to RGB
+			float c = (1.0f - Math.abs(2.0f * lightness - 1.0f)) * saturation;
+			float x = c * (1.0f - Math.abs((hue * 6.0f) % 2.0f - 1.0f));
+			float m = lightness - c / 2.0f;
+			
+			float r, g, b;
+			
+			if (hue < 1.0f / 6.0f) {
+				r = c; g = x; b = 0;
+			} else if (hue < 2.0f / 6.0f) {
+				r = x; g = c; b = 0;
+			} else if (hue < 3.0f / 6.0f) {
+				r = 0; g = c; b = x;
+			} else if (hue < 4.0f / 6.0f) {
+				r = 0; g = x; b = c;
+			} else if (hue < 5.0f / 6.0f) {
+				r = x; g = 0; b = c;
+			} else {
+				r = c; g = 0; b = x;
+			}
+			
+			float red = MathHelper.clamp(r + m, 0.0f, 1.0f);
+			float green = MathHelper.clamp(g + m, 0.0f, 1.0f);
+			float blue = MathHelper.clamp(b + m, 0.0f, 1.0f);
+			
+			RenderSystem.setShaderColor(red, green, blue, 1.0f);
+		}
+		else
+		{
+			// Use RGB values directly
+			float red = MathHelper.clamp(ModConfig.INSTANCE.saturationOverlayRed / 255.0f, 0.0f, 1.0f);
+			float green = MathHelper.clamp(ModConfig.INSTANCE.saturationOverlayGreen / 255.0f, 0.0f, 1.0f);
+			float blue = MathHelper.clamp(ModConfig.INSTANCE.saturationOverlayBlue / 255.0f, 0.0f, 1.0f);
+			
+			RenderSystem.setShaderColor(red, green, blue, 1.0f);
+		}
 	}
 
 
