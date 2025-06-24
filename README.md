@@ -1,107 +1,111 @@
-<img src="https://www.ryanliptak.com/images/appleskin.png" width="32" /> [AppleSkin](https://minecraft.curseforge.com/projects/appleskin)
-===========
+# BannanaSkin - AppleSkin with Custom Saturation Colors
 
-Minecraft mod that adds various food-related HUD improvements formerly provided by [AppleCore](https://github.com/squeek502/AppleCore) (basically, AppleCore without the core).
+A customized version of **AppleSkin** with added saturation overlay color customization features.
 
-### Features
+## 🍎 Original Project Credit
 
-* Adds food value information to tooltips:
+This project is based on [**AppleSkin**](https://github.com/squeek502/AppleSkin) by [squeek502](https://github.com/squeek502).
 
-![](https://i.imgur.com/YksBaUx.png)
+**Original AppleSkin** is a Minecraft mod that adds various food-related HUD improvements formerly provided by AppleCore. Full credit goes to the original author for the excellent base functionality.
 
-* Adds a visualization of saturation and exhaustion to the HUD:
+- **Original Repository**: https://github.com/squeek502/AppleSkin
+- **Original Author**: squeek502
+- **License**: Unlicense
 
-![](https://i.imgur.com/tmImVqo.gif)
+## 🎨 New Features
 
-* Adds a visualization of potential hunger/saturation restored while holding food:
+### `/bannana` Command - Saturation Color Customization
 
-![](https://i.imgur.com/aHf1QxQ.gif)
+This custom version adds the `/bannana` command that allows you to customize the color of the saturation overlay (the little icons around hunger drumsticks).
 
-* Adds a visualization of potential health restored while holding food:
+#### Available Commands:
 
-![](https://i.imgur.com/jUOKFUl.gif)
+##### **Help & Information**
+- `/bannana` - Show help with all available commands
+- `/bannana show` - Display current color settings
 
-* Adds hunger/saturation/exhaustion info to the debug overlay (F3)
-* Syncs the value of saturation and exhaustion to the client.
+##### **RGB Mode**
+- `/bannana rgb <red> <green> <blue>` - Set RGB values (0-255)
+  - Example: `/bannana rgb 255 0 0` (pure red)
+  - Example: `/bannana rgb 0 255 255` (cyan)
+  - Example: `/bannana rgb 255 165 0` (orange)
+
+##### **HSL Mode**
+- `/bannana hsl <hue> <gamma>` - Set HSL values
+  - **Hue**: 0.0-1.0 (0=red, 0.33=green, 0.66=blue, 1.0=red)
+  - **Gamma**: 0.0-2.0 (brightness/intensity)
+  - Example: `/bannana hsl 0.5 1.5` (cyan with high brightness)
+  - Example: `/bannana hsl 0.75 1.2` (bright purple)
+
+##### **Mode Control**
+- `/bannana mode rgb` - Switch to RGB mode
+- `/bannana mode hsl` - Switch to HSL mode
+
+##### **Utilities**
+- `/bannana reset` - Reset to default values (white)
+
+### Features:
+- ✅ **Real-time color changes** - See changes immediately in-game
+- ✅ **Persistent settings** - Colors save between game sessions
+- ✅ **Two color modes** - RGB for precise control, HSL for artistic control
+- ✅ **Input validation** - Commands prevent invalid values
+- ✅ **Colored feedback** - Command responses use colored text
+- ✅ **Easy reset** - One command to restore defaults
+
+## 🔧 Building
+
+1. Clone this repository
+2. Open a command line and execute `./gradlew build`
+3. The compiled mod will be in `build/libs/bannanaSkin.jar`
+
+## 📦 Installation
+
+1. Install [Fabric Loader](https://fabricmc.net/use/installer/)
+2. Install [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+3. Place `bannanaSkin.jar` in your mods folder
+4. Launch Minecraft and enjoy customizable saturation colors!
+
+## 🎮 Usage Examples
+
+```bash
+# Make saturation overlay red
+/bannana rgb 255 0 0
+
+# Make it a nice cyan color
+/bannana rgb 0 255 255
+
+# Use HSL for a rainbow effect (change hue value)
+/bannana hsl 0.0 1.5   # Red
+/bannana hsl 0.33 1.5  # Green  
+/bannana hsl 0.66 1.5  # Blue
+
+# Reset to default
+/bannana reset
+
+# Check current settings
+/bannana show
+```
+
+## 🏷️ Compatibility
+
+- **Minecraft Version**: 1.21
+- **Mod Loader**: Fabric
+- **Base Mod**: AppleSkin (all original features preserved)
+
+## 📜 License
+
+This customized version maintains the same **Unlicense** license as the original AppleSkin project.
+
+## 🤝 Contributing
+
+This is a personal customization project. For the main AppleSkin mod, please visit the [original repository](https://github.com/squeek502/AppleSkin).
+
+## 📞 Support
+
+For issues specific to the `/bannana` color customization features, please open an issue on this repository.
+
+For general AppleSkin functionality, please refer to the [original AppleSkin repository](https://github.com/squeek502/AppleSkin).
 
 ---
 
-### Building AppleSkin
-1. Clone the repository
-2. Open a command line and execute ```gradlew build```
-
-Note: To give the build a version number, use ```gradlew build -Pversion=<version>``` instead (example: ```gradlew build -Pversion=1.0.0```).
-
----
-
-### For Mod Developers
-
-If followed, the directions below will make it so that your mod's Maven dependencies won't include AppleSkin at all, and your mod will load fine with or without AppleSkin installed.
-
-To compile against the AppleSkin API, include the following in your `build.gradle`:
-
-```groovy
-repositories {
-	maven { url "https://maven.ryanliptak.com/" }
-}
-```
-
-and add this to your `dependencies` block:
-
-```groovy
-modCompileOnly("squeek.appleskin:appleskin-fabric:<version>:api") {
-    transitive = false
-}
-```
-
-where `<version>` is replaced by the appropriate version found here:
-
-https://maven.ryanliptak.com/squeek/appleskin/appleskin-fabric
-
-> *Note: `modCompileOnly` is used for the API module because the AppleSkin API is not distributed as a separate mod (and therefore it is also not recommended to include it as a jar-in-jar)*
-
-Once you're compiling against the AppleSkin API, you can use the `"appleskin"` [entrypoint](https://fabricmc.net/wiki/documentation:entrypoint) to register your event handlers. Here's an example implementation:
-
-In your `fabric.mod.json`:
-
-```json
-"entrypoints": {
-  "appleskin": [
-    "your.package.name.AppleSkinEventHandler"
-  ]
-}
-```
-and the `AppleSkinEventHandler` class:
-```java
-public class AppleSkinEventHandler implements AppleSkinApi
-{
-	@Override
-	public void registerEvents()
-	{
-		FoodValuesEvent.EVENT.register(foodValuesEvent -> {
-			// display hunger restored as 1 for all food
-			foodValuesEvent.modifiedFoodValues = new FoodValues(1, foodValuesEvent.defaultFoodValues.saturationModifier);
-		});
-	}
-}
-```
-
-(see the `squeek.appleskin.api.event` package for all the possible events that can be registered)
-
----
-
-Note: if you want to test with the full AppleSkin mod in your development environment, you can also add the following to your `dependencies`:
-
-```groovy
-modLocalRuntime("squeek.appleskin:appleskin-fabric:<version>") {
-    exclude module: 'modmenu'
-}
-```
-
-while replacing `<version>` as mentioned above. You will also need to add the Maven repository for Cloth to your `build.gradle`, since AppleSkin depends on it:
-
-```groovy
-repositories {
-	maven { url "https://maven.shedaniel.me/" }
-}
-```
+**Special thanks to squeek502 for creating the amazing AppleSkin mod that made this customization possible!** 🎉

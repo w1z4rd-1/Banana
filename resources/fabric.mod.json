@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "appleskin",
+  "id": "bannanaskin",
   "version": "${version}",
 
-  "name": "AppleSkin",
-  "description": "Adds various food-related HUD improvements",
+  "name": "BannanaSkin",
+  "description": "AppleSkin with custom saturation color overlay via /bannana command. Based on AppleSkin by squeek502.",
   "authors": [
-    "squeek502"
+    "w1z4rd-1 (customization)",
+    "squeek502 (original AppleSkin)"
   ],
   "contact": {
-    "sources": "https://github.com/squeek502/AppleSkin",
-    "homepage": "https://minecraft.curseforge.com/projects/appleskin",
-    "issues": "https://github.com/squeek502/AppleSkin/issues"
+    "sources": "https://github.com/w1z4rd-1/BannanaSkin",
+    "homepage": "https://github.com/w1z4rd-1/BannanaSkin"
   },
 
   "license": "Unlicense",
